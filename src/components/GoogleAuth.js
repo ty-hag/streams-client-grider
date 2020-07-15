@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { signIn, signOut } from '../actions';
-import config from '../../config';
+
+require('dotenv').config();
 
 class GoogleAuth extends React.Component {
 
@@ -13,9 +14,11 @@ class GoogleAuth extends React.Component {
     4. Set listener for auth status change and pass function to call on a change - this.auth.isSignedIn.listen(this.onAuthChange);
   */
   componentDidMount() {
+
+    console.log(process.env);
     window.gapi.load('client:auth2', () => {
       window.gapi.client.init({ // this returns a promise
-        clientId: config.GAPI_CLIENT_ID,
+        clientId: process.env.REACT_APP_GAPI_CLIENT_ID,
         scope: 'email'
       }).then(() => {
         this.auth = window.gapi.auth2.getAuthInstance();
